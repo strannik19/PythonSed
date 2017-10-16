@@ -973,6 +973,7 @@ def parse_arguments_aic(line, i):
 
     return len(line), arg
 
+
 def parse_arguments_s(line, i):
     i, left = parse_regexp(line, i)
     i, right = parse_replacement(line, i, delim=line[i - 1])
@@ -1338,7 +1339,7 @@ def re_sub_ex(pattern, compiled, replacement, string, count, flags):
             self.calls = 0
         def __call__(self, matchobj):
             if count == 0:
-                return re._expand(pattern, Match(matchobj), replacement)
+                return re._expand(re.compile(re.escape(pattern)), Match(matchobj), replacement)
             else:
                 self.calls += 1
                 if self.calls == count:
