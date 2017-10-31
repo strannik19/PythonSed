@@ -131,7 +131,7 @@ class Sed:
 
     def printline(self, line):
         self.output_lines.append(line)
-        if self.output is not None:
+        if not self.no_autoprint or self.output.name != '<stdout>':
             print(line, file=self.output)
 
     def flush_append_buffer(self):
@@ -163,9 +163,10 @@ class Sed:
 
             # end of cycle
 
-            if self.no_autoprint:
-                pass
-            elif prev_command.function == 'D':
+            # if self.no_autoprint:
+            #     self.output_lines.append(self.PS)
+            #     #pass
+            if prev_command.function == 'D':
                 pass
             elif prev_command.function == 'd':
                 if self.PS is None:
