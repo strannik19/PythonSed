@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from __future__ import print_function
+# from __future__ import print_function
 
 BRIEF = """\
 sed.py - python sed module and command line utility - sed.godrago.net\
@@ -65,13 +65,18 @@ class Sed:
         self.append_buffer = []
         self.last_regexp = None
         self.commands = None
+        self.loaded_files = []
 
     def load_script(self, filename):
         try:
             with open(filename) as f:
                 string_list = f.readlines()
+            try:
+                self.loaded_files.append(os.path.basename(filename))
+            except:
+                pass
         except:
-            raise SedException('error reading ' + filename)
+            raise SedException('error reading ' + str(filename))
         self.load_string_list(string_list)
 
     def load_string(self, string):
